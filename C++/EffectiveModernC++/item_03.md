@@ -4,7 +4,7 @@
 
 decltype은 declared type의 의미로 해당 식이 나타내는 타입을 그대로 돌려준다. 어떤 이름(name)이나 표현식(expression)을 decltype에 집어넣으면 decltype은 해당 이름이나 표현식의 타입을 알려준다.
 
-[[item 1,2]]에서 다뤘던 auto나 template에서의 타입 추론과 decltype이 다른 점은, decltype은 해당 표현식이나 이름의 타입을 있는 그대로 돌려준다는 점이다.
+[item 1,2](item_01_02.md)에서 다뤘던 auto나 template에서의 타입 추론과 decltype이 다른 점은, decltype은 해당 표현식이나 이름의 타입을 있는 그대로 돌려준다는 점이다.
 
 ```C++
 const int i = 0; // decltype(i) => const int
@@ -56,7 +56,7 @@ auto authAndAccess(Container& c, Index i)
 }
 ```
 
-다만 이 때 생기는 큰 문제점은, 이 경우 [[item 1,2]]에서 설명한 auto의 타입 추론 방식이 그대로 적용된다는 것이다. 따라서 c[i]가 어떤 T타입의 레퍼런스(T&)를 리턴할 경우 auto의 타입 추론에 의해 이 함수의 리턴 타입은 T&가 아니라 T가 돼버린다. 이 때문에 코드 작성자의 의도와 엇나가버릴 수 있다.
+다만 이 때 생기는 큰 문제점은, 이 경우 [item 1,2](item_01_02.md)에서 설명한 auto의 타입 추론 방식이 그대로 적용된다는 것이다. 따라서 c[i]가 어떤 T타입의 레퍼런스(T&)를 리턴할 경우 auto의 타입 추론에 의해 이 함수의 리턴 타입은 T&가 아니라 T가 돼버린다. 이 때문에 코드 작성자의 의도와 엇나가버릴 수 있다.
 
 ```C++
 std::vector<int> v;
@@ -69,7 +69,7 @@ authAndAccess(v,5) = 10; //가능해야 할 것 같지만 v[5]의 타입이
 
 ## decltype(auto)
 
-C++ 14에서 지원하는 decltype(auto)는 타입 추론을 하되 그 규칙을 decltype의 규칙에 따른다는 의미이다. 그냥 auto가 [[item 1,2]]에서 설명한 방식대로 동작하는 반면, decltype(auto)는 제일 처음 설명한 decltype의 동작대로 타입을 추론한다. 예를 통해 확인해보자.
+C++ 14에서 지원하는 decltype(auto)는 타입 추론을 하되 그 규칙을 decltype의 규칙에 따른다는 의미이다. 그냥 auto가 [item 1,2](item_01_02.md)에서 설명한 방식대로 동작하는 반면, decltype(auto)는 제일 처음 설명한 decltype의 동작대로 타입을 추론한다. 예를 통해 확인해보자.
 
 ```C++
 int i;
@@ -109,7 +109,7 @@ auto firstEnemy = authAndAccess(makeEnemyQueue(), 0);
 ```
 c에 넘어온 makeEnemyQueue()는 우측값이며, 따라서 이 문장이 끝나면 사라지는 임시 객체이다. 문제는 이 경우 c[i]가 임시 객체 내부의 한 요소를 가리키고 있으므로, 해당 문장이 끝난 후 firstEnemy는 dangling pointer가 되어버린다. 이 문제를 해결하기 위해서 인자로 좌측값 레퍼런스와 우측값 레퍼런스를 받는 두 개의 함수를 각각 만드는 방법도 있지만, 이건 유지 보수 측면에서 비용이 높다.
 
-여기에 [[std::forward]]까지 이용해서 인자로 넘어온 컨테이너가 lvalue인 경우, rvalue인 경우 모두에 대해 정상 동작하게 만들 수 있다.
+여기에 std::forward까지 이용해서 인자로 넘어온 컨테이너가 lvalue인 경우, rvalue인 경우 모두에 대해 정상 동작하게 만들 수 있다.
 
 ```C++
 //C++ 14
