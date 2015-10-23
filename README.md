@@ -1,2 +1,4 @@
-# ILearned
-I Learned
+
+#I Leaned
+
+ 배운 지식들을 정리합니다.
